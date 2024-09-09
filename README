@@ -12,5 +12,5 @@
     /docs/planning-artifacts    - Project designs and planning documents
     /tests                      - Test cases from testing suites
     /tools                      - Utility scripts and other custom tools
-    /ui: Front-end components, templates, styles, and scripts for the user interface.
-    /api: Back-end API code, including server-side logic, routes, and controllers.
+    /ui                         -Front-end components, templates, styles, and scripts for the user interface.
+    /api                        -Back-end API code, including server-side logic, routes, and controllers.

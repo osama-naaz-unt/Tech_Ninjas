@@ -1,0 +1,15 @@
+/Apps
+    /Users & Shops  - User models and forms, models used for backend
+
+/Core               - Core configuration for the project
+
+/Media              - Images displayed in the project
+
+/Templates          - Frontend of the project, includes each of the pages
+
+/db.sqlite3         - Database of the project, currently contains tables without data
+
+/Docs
+    /Final Report    - The deliverable 3 document
+    /Core functionalities - Documentation for core functionalities in this phase
+    /Meeting minutes - The meeting minutes

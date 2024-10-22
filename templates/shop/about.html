@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <!-- About Section -->
+    <section class="py-16">
+        <div class="container mx-auto px-6">
+            <h1 class="text-4xl font-bold text-gray-800 mb-8 text-center">About ModernShop</h1>
+            
+            <!-- Company Overview -->
+            <div class="mb-16">
+                <h2 class="text-2xl font-semibold text-gray-800 mb-4">Our Story</h2>
+                <p class="text-gray-600 mb-4">
+                    ModernShop was founded in 2020 with a simple mission: to provide high-quality products at competitive prices while offering an exceptional shopping experience. What started as a small online store has grown into a trusted e-commerce platform, serving customers worldwide.
+                </p>
+                <p class="text-gray-600 mb-4">
+                    Our team of passionate individuals works tirelessly to curate a diverse range of products, from cutting-edge electronics to trendy fashion items and everything in between. We believe that shopping should be easy, enjoyable, and accessible to everyone.
+                </p>
+            </div>
+
+            <!-- Mission and Values -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h2 class="text-2xl font-semibold text-gray-800 mb-4">Our Mission</h2>
+                    <p class="text-gray-600">
+                        To revolutionize the online shopping experience by offering a wide selection of high-quality products, exceptional customer service, and innovative solutions that make shopping convenient and enjoyable for everyone.
+                    </p>
+                </div>
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h2 class="text-2xl font-semibold text-gray-800 mb-4">Our Values</h2>
+                    <ul class="text-gray-600 list-disc list-inside">
+                        <li>Customer-First Approach</li>
+                        <li>Quality and Reliability</li>
+                        <li>Innovation and Continuous Improvement</li>
+                        <li>Transparency and Integrity</li>
+                        <li>Sustainability and Social Responsibility</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Team Section -->
+            <div class="mb-16">
+                <h2 class="text-2xl font-semibold text-gray-800 mb-8 text-center">Meet Our Team</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+                    <!-- Team Member 1 -->
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                        <img src="https://via.placeholder.com/300x300?text=John+Doe" alt="John Doe" class="w-full h-64 object-cover">
+                        <div class="p-4">
+                            <h3 class="text-xl font-semibold mb-2">John Doe</h3>
+                            <p class="text-gray-600 mb-2">CEO & Founder</p>
+                            <div class="flex space-x-2">
+                                <a href="#" class="text-blue-500 hover:text-blue-600"><i class="fab fa-linkedin"></i></a>
+                                <a href="#" class="text-blue-400 hover:text-blue-500"><i class="fab fa-twitter"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Team Member 2 -->
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                        <img src="https://via.placeholder.com/300x300?text=Jane+Smith" alt="Jane Smith" class="w-full h-64 object-cover">
+                        <div class="p-4">
+                            <h3 class="text-xl font-semibold mb-2">Jane Smith</h3>
+                            <p class="text-gray-600 mb-2">COO</p>
+                            <div class="flex space-x-2">
+                                <a href="#" class="text-blue-500 hover:text-blue-600"><i class="fab fa-linkedin"></i></a>
+                                <a href="#" class="text-blue-400 hover:text-blue-500"><i class="fab fa-twitter"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Team Member 3 -->
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                        <img src="https://via.placeholder.com/300x300?text=Mike+Johnson" alt="Mike Johnson" class="w-full h-64 object-cover">
+                        <div class="p-4">
+                            <h3 class="text-xl font-semibold mb-2">Mike Johnson</h3>
+                            <p class="text-gray-600 mb-2">CTO</p>
+                            <div class="flex space-x-2">
+                                <a href="#" class="text-blue-500 hover:text-blue-600"><i class="fab fa-linkedin"></i></a>
+                                <a href="#" class="text-blue-400 hover:text-blue-500"><i class="fab fa-twitter"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Team Member 4 -->
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                        <img src="https://via.placeholder.com/300x300?text=Sarah+Lee" alt="Sarah Lee" class="w-full h-64 object-cover">
+                        <div class="p-4">
+                            <h3 class="text-xl font-semibold mb-2">Sarah Lee</h3>
+                            <p class="text-gray-600 mb-2">Head of Marketing</p>
+                            <div class="flex space-x-2">
+                                <a href="#" class="text-blue-500 hover:text-blue-600"><i class="fab fa-linkedin"></i></a>
+                                <a href="#" class="text-blue-400 hover:text-blue-500"><i class="fab fa-twitter"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Achievements -->
+            <div class="bg-white rounded-lg shadow-md p-8 mb-16">
+                <h2 class="text-2xl font-semibold text-gray-800 mb-6 text-center">Our Achievements</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+                    <div class="text-center">
+                        <i class="fas fa-users text-4xl text-blue-500 mb-4"></i>
+                        <h3 class="text-xl font-semibold mb-2">1M+</h3>
+                        <p class="text-gray-600">Happy Customers</p>
+                    </div>
+                    <div class="text-center">
+                        <i class="fas fa-globe text-4xl text-blue-500 mb-4"></i>
+                        <h3 class="text-xl font-semibold mb-2">50+</h3>
+                        <p class="text-gray-600">Countries Served</p>
+                    </div>
+                    <div class="text-center">
+                        <i class="fas fa-box text-4xl text-blue-500 mb-4"></i>
+                        <h3 class="text-xl font-semibold mb-2">100K+</h3>
+                        <p class="text-gray-600">Products</p>
+                    </div>
+                    <div class="text-center">
+                        <i class="fas fa-award text-4xl text-blue-500 mb-4"></i>
+                        <h3 class="text-xl font-semibold mb-2">20+</h3>
+                        <p class="text-gray-600">Industry Awards</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Call to Action -->
+            <div class="bg-blue-600 rounded-lg shadow-md p-8 text-center">
+                <h2 class="text-2xl font-semibold text-white mb-4">Ready to Start Shopping?</h2>
+                <p class="text-white mb-6">Join millions of satisfied customers and experience the ModernShop difference today!</p>
+                <a href="{% url 'shop:shop' %}" class="bg-white text-blue-600 py-2 px-6 rounded-full font-semibold hover:bg-gray-100 transition duration-300">Shop Now</a>
+            </div>
+        </div>
+    </section>
+{% endblock %}

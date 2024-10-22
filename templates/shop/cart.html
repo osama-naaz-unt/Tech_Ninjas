@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+    <!-- Cart Section -->
+    <section class="py-16">
+        <div class="container mx-auto px-6">
+            <h1 class="text-3xl font-bold text-gray-800 mb-8">Your Shopping Cart</h1>
+            
+            <!-- Cart Items -->
+            <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+                <table class="w-full">
+                    <thead>
+                        <tr class="border-b">
+                            <th class="text-left py-2">Product</th>
+                            <th class="text-left py-2">Price</th>
+                            <th class="text-left py-2">Quantity</th>
+                            <th class="text-left py-2">Total</th>
+                            <th class="text-left py-2"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Sample Cart Item 1 -->
+                        <tr class="border-b">
+                            <td class="py-4">
+                                <div class="flex items-center">
+                                    <img src="https://via.placeholder.com/80x80" alt="Product 1" class="w-20 h-20 object-cover rounded mr-4">
+                                    <span class="font-semibold">Modern Desk Lamp</span>
+                                </div>
+                            </td>
+                            <td class="py-4">$49.99</td>
+                            <td class="py-4">
+                                <div class="flex items-center">
+                                    <button class="border rounded-l px-2 py-1 hover:bg-gray-200">-</button>
+                                    <span class="border-t border-b px-2 py-1">1</span>
+                                    <button class="border rounded-r px-2 py-1 hover:bg-gray-200">+</button>
+                                </div>
+                            </td>
+                            <td class="py-4">$49.99</td>
+                            <td class="py-4">
+                                <button class="text-red-500 hover:text-red-600"><i class="fas fa-trash"></i></button>
+                            </td>
+                        </tr>
+                        <!-- Sample Cart Item 2 -->
+                        <tr class="border-b">
+                            <td class="py-4">
+                                <div class="flex items-center">
+                                    <img src="https://via.placeholder.com/80x80" alt="Product 2" class="w-20 h-20 object-cover rounded mr-4">
+                                    <span class="font-semibold">Wireless Earbuds</span>
+                                </div>
+                            </td>
+                            <td class="py-4">$89.99</td>
+                            <td class="py-4">
+                                <div class="flex items-center">
+                                    <button class="border rounded-l px-2 py-1 hover:bg-gray-200">-</button>
+                                    <span class="border-t border-b px-2 py-1">2</span>
+                                    <button class="border rounded-r px-2 py-1 hover:bg-gray-200">+</button>
+                                </div>
+                            </td>
+                            <td class="py-4">$179.98</td>
+                            <td class="py-4">
+                                <button class="text-red-500 hover:text-red-600"><i class="fas fa-trash"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Cart Summary -->
+            <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+                <h2 class="text-xl font-semibold mb-4">Cart Summary</h2>
+                <div class="flex justify-between mb-2">
+                    <span>Subtotal</span>
+                    <span>$229.97</span>
+                </div>
+                <div class="flex justify-between mb-2">
+                    <span>Shipping</span>
+                    <span>$10.00</span>
+                </div>
+                <div class="flex justify-between mb-2">
+                    <span>Tax</span>
+                    <span>$22.99</span>
+                </div>
+                <div class="border-t pt-2 mt-2">
+                    <div class="flex justify-between items-center">
+                        <span class="font-semibold">Total</span>
+                        <span class="font-semibold text-xl">$262.96</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Checkout Button -->
+            <div class="text-right">
+                <a href="#" class="bg-blue-500 text-white py-2 px-6 rounded-md hover:bg-blue-600 transition duration-300 inline-block">Proceed to Checkout</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Related Products -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-8">You May Also Like</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+                <!-- Related Product 1 -->
+                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                    <img src="https://via.placeholder.com/300x200" alt="Related Product 1" class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <h3 class="text-lg font-semibold mb-2">Bluetooth Speaker</h3>
+                        <p class="text-gray-600 mb-2">$79.99</p>
+                        <button class="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-300 w-full">Add to Cart</button>
+                    </div>
+                </div>
+                <!-- Related Product 2 -->
+                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                    <img src="https://via.placeholder.com/300x200" alt="Related Product 2" class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <h3 class="text-lg font-semibold mb-2">Smart Watch</h3>
+                        <p class="text-gray-600 mb-2">$129.99</p>
+                        <button class="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-300 w-full">Add to Cart</button>
+                    </div>
+                </div>
+                <!-- Related Product 3 -->
+                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                    <img src="https://via.placeholder.com/300x200" alt="Related Product 3" class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <h3 class="text-lg font-semibold mb-2">Wireless Mouse</h3>
+                        <p class="text-gray-600 mb-2">$39.99</p>
+                        <button class="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-300 w-full">Add to Cart</button>
+                    </div>
+                </div>
+                <!-- Related Product 4 -->
+                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                    <img src="https://via.placeholder.com/300x200" alt="Related Product 4" class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <h3 class="text-lg font-semibold mb-2">Portable Charger</h3>
+                        <p class="text-gray-600 mb-2">$49.99</p>
+                        <button class="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-300 w-full">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

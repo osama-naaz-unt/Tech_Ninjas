@@ -1,0 +1,11 @@
+This file includes the directories of the all the files
+
+Apps -> Users & Shops -> User models and forms, models used for backend
+Core -> Core configuration for the project
+Media -> images displayed in teh project
+Templates -> Frontend of the project, includes each of the page
+db.sqlite3 -> DB of the project, right now just contains tables no data
+
+Docs/Final Report -> The deliverable 3 doc.
+Docs -> the core functionalities of this phase
+Docs/Meeting minutes -> the meeting minutes

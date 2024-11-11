@@ -45,3 +45,22 @@ class Account(AbstractBaseUser):
     def get_name(self):
         return self.name if self.name else self.email.split('@')[0]
  
+
+class Address(models.Model):
+    user = models.ForeignKey('users.Account', on_delete=models.CASCADE, related_name='addresses')
+    name = models.CharField(max_length=100)
+    street_address = models.CharField(max_length=255)
+    city = models.CharField(max_length=100)
+    state = models.CharField(max_length=100)
+    zip_code = models.CharField(max_length=20)
+    country = models.CharField(max_length=100)
+    is_default = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"{self.name} - {self.street_address}, {self.city}"
+
+    def save(self, *args, **kwargs):
+        if self.is_default:
+            # Set all other addresses of this user to non-default
+            Address.objects.filter(user=self.user).update(is_default=False)
+        super().save(*args, **kwargs)

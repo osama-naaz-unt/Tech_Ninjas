@@ -108,8 +108,7 @@ def get_recommended_products(request, total_products=4):
     # 3. Get products from similar categories, excluding cart items
     if relevant_categories:
         category_recommendations = Product.objects.filter(
-            category__id__in=relevant_categories,
-            is_active=True
+            category__id__in=relevant_categories
         ).exclude(
             id__in=cart_product_ids + purchased_products
         )

@@ -164,7 +164,7 @@ def set_default_address(request, address_id):
         
         Address.objects.filter(user=request.user).update(is_default=False)
     
-        address.is_default = False
+        address.is_default = True
         address.save()
         
         messages.success(request, f'Address "{address}" has been set as default.')

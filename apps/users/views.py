@@ -162,7 +162,7 @@ def set_default_address(request, address_id):
     if request.method == 'POST':
         address = get_object_or_404(Address, id=address_id, user=request.user)
         
-        Address.objects.filter(user=request.user).update(is_default=True)
+        Address.objects.filter(user=request.user).update(is_default=False)
     
         address.is_default = True
         address.save()

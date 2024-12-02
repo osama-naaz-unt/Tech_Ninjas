@@ -167,6 +167,6 @@ def set_default_address(request, address_id):
         address.is_default = True
         address.save()
         
-        messages.success(request, f'Address "{address}" has been set as default')
+        messages.success(request, f'Address "{address}" has been set as default.')
     
     return redirect('users:profile')

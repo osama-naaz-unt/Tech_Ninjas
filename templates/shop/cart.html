@@ -112,18 +112,3 @@
         <div class="mt-2 text-sm {% if message.tags == 'error' %}text-red-600{% elif message.tags == 'success' %}text-green-600{% endif %}">{{ message }}</div>
         {% endfor %} {% endif %} {% endif %}
       </div>
-
-      <div class="bg-white rounded-2xl shadow-lg p-6 border border-gray-100">
-        <h2 class="text-xl font-semibold mb-4 text-gray-800">Cart Summary</h2>
-        <div class="border-t border-gray-100 pt-4 mt-4">
-          <div class="flex justify-between items-center mb-2">
-            <span class="text-gray-600">Subtotal</span>
-            <span class="font-medium">${{ cart.total|floatformat:2 }}</span>
-          </div>
-          <div class="flex justify-between items-center pt-4 border-t border-gray-100">
-            <span class="font-semibold text-lg">Total</span>
-            <span class="font-bold text-2xl text-blue-600">${{ cart.total|floatformat:2 }}</span>
-          </div>
-        </div>
-      </div>
-    </div>

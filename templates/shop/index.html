@@ -18,3 +18,43 @@
             </div>
         </div>
     </section>
+
+    <!-- Featured Products -->
+    <section class="py-16">
+        <div class="container mx-auto px-6">
+          <h2 class="text-3xl font-bold text-gray-800 mb-8">Featured Products</h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {% for product in featured_products %}
+            <div class="group relative bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg">
+              <a href="{{ product.get_absolute_url }}" class="block">
+                <img src="{{ product.image.url }}" alt="{{ product.name }}" class="w-full h-64 object-cover">
+                <div class="p-4">
+                  <h3 class="text-xl font-semibold mb-2">{{ product.name }}</h3>
+                  <p class="text-gray-600 mb-2">${{ product.price }}</p>
+                  <div class="flex items-center mb-2">
+                    <span class="text-yellow-400">
+                      {% with ''|center:5 as range %}
+                      {% for _ in range %}
+                        {% if forloop.counter <= product.avg_rating %}
+                          ★
+                        {% else %}
+                          ☆
+                        {% endif %}
+                      {% endfor %}
+                      {% endwith %}
+                    </span>
+                    <span class="ml-1 text-gray-600">({{ product.avg_rating|floatformat:1 }})</span>
+                  </div>
+                </div>
+              </a>
+              <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <div class="text-white text-center">
+                  <a href="{{ product.get_absolute_url }}" class="bg-blue-600 text-white py-2 px-4 rounded-full hover:bg-blue-700 transition duration-300 inline-block mb-2">View Product</a>
+                  <a href="{{ product.add_to_cart_url }}" class="bg-green-600 text-white py-2 px-4 rounded-full hover:bg-green-700 transition duration-300">Add to Cart</a>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </section>

@@ -103,3 +103,27 @@
           </div>
         </div>
         {% else %}
+        <form action="{% url 'shop:apply_coupon' %}" method="POST" class="flex space-x-2">
+          {% csrf_token %}
+          <input type="text" placeholder="Enter your code" class="flex-1 border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" name="coupon" required />
+          <button type="submit" class="bg-gray-800 text-white px-6 py-2 rounded-lg hover:bg-gray-700 transition duration-200">Apply</button>
+        </form>
+        {% if messages %} {% for message in messages %}
+        <div class="mt-2 text-sm {% if message.tags == 'error' %}text-red-600{% elif message.tags == 'success' %}text-green-600{% endif %}">{{ message }}</div>
+        {% endfor %} {% endif %} {% endif %}
+      </div>
+
+      <div class="bg-white rounded-2xl shadow-lg p-6 border border-gray-100">
+        <h2 class="text-xl font-semibold mb-4 text-gray-800">Cart Summary</h2>
+        <div class="border-t border-gray-100 pt-4 mt-4">
+          <div class="flex justify-between items-center mb-2">
+            <span class="text-gray-600">Subtotal</span>
+            <span class="font-medium">${{ cart.total|floatformat:2 }}</span>
+          </div>
+          <div class="flex justify-between items-center pt-4 border-t border-gray-100">
+            <span class="font-semibold text-lg">Total</span>
+            <span class="font-bold text-2xl text-blue-600">${{ cart.total|floatformat:2 }}</span>
+          </div>
+        </div>
+      </div>
+    </div>

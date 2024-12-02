@@ -64,3 +64,21 @@ class Address(models.Model):
             # Set all other addresses of this user to non-default
             Address.objects.filter(user=self.user).update(is_default=False)
         super().save(*args, **kwargs)
+
+class Subscription(models.Model):
+    email = models.EmailField(verbose_name='email', max_length=60, unique=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return self.email
+    
+class Contact(models.Model):
+    user = models.ForeignKey('users.Account', on_delete=models.CASCADE, related_name='contacts')
+    name = models.CharField(max_length=100)
+    subject = models.CharField(max_length=100)
+    email = models.EmailField(verbose_name='email', max_length=60)
+    message = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return f"{self.name} - {self.email}"

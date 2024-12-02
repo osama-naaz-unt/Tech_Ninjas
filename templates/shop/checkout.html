@@ -55,3 +55,46 @@
                 </div>
             </div>
         </div>
+
+        <!-- Addresses Management -->
+        <div class="mt-12">
+            <h2 class="text-2xl font-semibold mb-4">Manage Addresses</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {% for address in user.addresses.all %}
+                <div class="bg-white rounded-lg shadow-md p-6 relative">
+                    <h3 class="text-lg font-semibold mb-2">{{ address.name }}</h3>
+                    <p>{{ address.street_address }}</p>
+                    <p>{{ address.city }}, {{ address.state }} {{ address.zip_code }}</p>
+                    <p>{{ address.country }}</p>
+                    <div class="mt-4 flex space-x-2">
+                        <a href="{% url 'users:edit_address' address.id %}" class="text-blue-500 hover:text-blue-600">Edit</a>
+                        <form method="POST" action="{% url 'users:delete_address' address.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="text-red-500 hover:text-red-600">Delete</button>
+                        </form>
+                    </div>
+                    {% if address.is_default %}
+                    <span class="absolute top-2 right-2 bg-green-500 text-white text-xs font-bold px-2 py-1 rounded">Default</span>
+                    {% endif %}
+                </div>
+                {% empty %}
+                <p class="text-gray-500">No addresses added yet.</p>
+                {% endfor %}
+
+                <!-- Add New Address -->
+                <div class="bg-white rounded-lg shadow-md p-6 border-2 border-dashed border-gray-300 flex items-center justify-center">
+                    <a href="{% url 'users:add_address' %}" class="text-blue-500 hover:text-blue-600 flex items-center">
+                        <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                        </svg>
+                        Add New Address
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block js %}

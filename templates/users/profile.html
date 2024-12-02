@@ -18,3 +18,23 @@
   }
   
   .dataTables_wrapper .dataTables_length select,
+  .dataTables_wrapper .dataTables_filter input {
+  @apply border border-gray-200 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none;
+  }
+  
+  .dataTables_wrapper .dataTables_paginate .paginate_button {
+  @apply rounded-lg px-4 py-2 mx-1 transition-colors;
+  }
+  
+  .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+  @apply bg-blue-600 text-white border-blue-600;
+  }
+  
+  .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+  @apply bg-blue-700 text-white border-blue-700;
+  }
+  
+  /* Enhanced Form Input Styling */
+  .form-input {
+  @apply mt-1 block w-full rounded-lg border-gray-300 shadow-sm transition-all duration-200;
+  @apply focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50;

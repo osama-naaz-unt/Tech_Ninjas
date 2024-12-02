@@ -19,7 +19,7 @@ def login_view(request):
             if user:
                 login(request, user)
                 messages.success(request, f"Welcome back, {user.get_name}.")
-                return redirect('shop:index')
+                return redirect(request.GET.get('next', '/'))
             else:
                 messages.error(request, "An error occurred. Kindly try again with correct credentials, reset password if you have forgotten or contact us.")
         else:
@@ -145,7 +145,7 @@ def edit_address(request, address_id):
         form = AddressForm(request.POST, instance=address)
         if form.is_valid():
             form.save()
-            return redirect('profile')
+            return redirect('users:profile')
     else:
         form = AddressForm(instance=address)
     return render(request, 'edit_address.html', {'form': form, 'address': address})
@@ -155,7 +155,7 @@ def delete_address(request, address_id):
     address = get_object_or_404(Address, id=address_id, user=request.user)
     if request.method == 'POST':
         address.delete()
-    return redirect('profile')
+    return redirect('users:profile')
 
 @login_required
 def set_default_address(request, address_id):

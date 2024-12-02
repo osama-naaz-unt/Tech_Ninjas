@@ -16,4 +16,4 @@ urlpatterns = [
     path('reset-password/success/', views.reset_success, name='reset_success'),
     path('reset-password/new/', views.reset_new, name='reset_new'),
     path('reset-password/done/', views.reset_done, name='reset_done'),
-
+]

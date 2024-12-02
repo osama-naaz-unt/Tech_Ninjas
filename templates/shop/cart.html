@@ -112,3 +112,167 @@
         <div class="mt-2 text-sm {% if message.tags == 'error' %}text-red-600{% elif message.tags == 'success' %}text-green-600{% endif %}">{{ message }}</div>
         {% endfor %} {% endif %} {% endif %}
       </div>
+
+      <div class="bg-white rounded-2xl shadow-lg p-6 border border-gray-100">
+        <h2 class="text-xl font-semibold mb-4 text-gray-800">Cart Summary</h2>
+        <div class="border-t border-gray-100 pt-4 mt-4">
+          <div class="flex justify-between items-center mb-2">
+            <span class="text-gray-600">Subtotal</span>
+            <span class="font-medium">${{ cart.total|floatformat:2 }}</span>
+          </div>
+          <div class="flex justify-between items-center pt-4 border-t border-gray-100">
+            <span class="font-semibold text-lg">Total</span>
+            <span class="font-bold text-2xl text-blue-600">${{ cart.total|floatformat:2 }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Checkout Button -->
+    <div class="text-right mt-8 hidden">
+      {% if request.user.addresses.all|length >= 1 %}
+      <div id="paypal-button-container"></div>
+      <p id="result-message"></p>
+      {% else %}
+      <div class="text-center">
+        <p class="mb-4 text-gray-700">You need to add a shipping address before checkout.</p>
+        <a href="{% url 'users:profile' %}" class="inline-block px-6 py-3 text-sm font-medium leading-6 text-center text-white uppercase transition bg-blue-600 rounded-full shadow ripple hover:shadow-lg hover:bg-blue-800 focus:outline-none"> Add Address </a>
+      </div>
+      {% endif %}
+    </div>
+    <!-- Checkout Button -->
+    <div class="text-right mt-8">
+      {% if request.user.addresses.all|length >= 1 %}
+      <form action="{% url 'shop:checkout' %}" method="POST" class="text-center">
+        {% csrf_token %}
+        <input type="hidden" name="payment_method" value="cash_on_delivery" />
+        <button type="submit" class="w-full px-6 py-4 text-lg font-medium text-white bg-green-600 rounded-lg shadow-md hover:bg-green-700 transition duration-200 flex items-center justify-center space-x-2">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path>
+          </svg>
+          <span>Pay with Cash on Delivery</span>
+        </button>
+      </form>
+      {% else %}
+      <div class="text-center">
+        <p class="mb-4 text-gray-700">You need to add a shipping address before checkout.</p>
+        <a href="{% url 'users:profile' %}" class="inline-block px-6 py-3 text-sm font-medium leading-6 text-center text-white uppercase transition bg-blue-600 rounded-full shadow ripple hover:shadow-lg hover:bg-blue-800 focus:outline-none"> Add Address </a>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<!-- Related Products -->
+<section class="py-16 bg-gray-50">
+  <div class="container mx-auto px-4 sm:px-6 max-w-7xl">
+    <h2 class="text-2xl font-bold text-gray-800 mb-8">Recommended Products</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      {% for product in recommended_products %}
+      <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 hover:shadow-xl transition duration-300 transform hover:-translate-y-1">
+        <div class="relative">
+          <img src="{{ product.image.url }}" alt="{{ product.name }}" class="w-full h-48 object-cover" />
+          <div class="absolute top-2 right-2">
+            <span class="bg-white px-2 py-1 rounded-full text-sm font-medium text-gray-800 shadow-sm"> ${{ product.price }} </span>
+          </div>
+        </div>
+        <div class="p-4">
+          <h3 class="text-lg font-semibold mb-2 text-gray-800 hover:text-blue-600 transition duration-200">{{ product.name }}</h3>
+          <form method="post" action="{% url 'shop:add_to_cart' product.id %}">
+            {% csrf_token %}
+            <button type="submit" class="bg-gray-800 text-white py-2 px-4 rounded-lg hover:bg-gray-700 transition duration-300 w-full flex items-center justify-center space-x-2">
+              <i class="fas fa-shopping-cart"></i>
+              <span>Add to Cart</span>
+            </button>
+          </form>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %} {% block js %}
+<script src="https://www.paypal.com/sdk/js?client-id=test&buyer-country=US&currency=USD&components=buttons&enable-funding=card&disable-funding=venmo,paylater" data-sdk-integration-source="developer-studio"></script>
+<script>
+  // Define the resultMessage function
+  function resultMessage(message) {
+    const resultElement = document.getElementById("result-message");
+    resultElement.innerHTML = message;
+  }
+  window.paypal
+    .Buttons({
+      style: {
+        shape: "rect",
+        layout: "vertical",
+        color: "gold",
+        label: "checkout",
+      },
+
+      async createOrder() {
+        try {
+          const response = await fetch("/api/orders", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            // use the "body" param to optionally pass additional order information
+            // like product ids and quantities
+            body: JSON.stringify({
+              cart: [
+                {
+                  id: "YOUR_PRODUCT_ID",
+                  quantity: "YOUR_PRODUCT_QUANTITY",
+                },
+              ],
+            }),
+          });
+
+          const orderData = await response.json();
+
+          if (orderData.id) {
+            return orderData.id;
+          }
+          const errorDetail = orderData?.details?.[0];
+          const errorMessage = errorDetail ? `${errorDetail.issue} ${errorDetail.description} (${orderData.debug_id})` : JSON.stringify(orderData);
+
+          throw new Error(errorMessage);
+        } catch (error) {
+          console.error(error);
+          // resultMessage(`Could not initiate PayPal Checkout...<br><br>${error}`);
+        }
+      },
+
+      async onApprove(data, actions) {
+        try {
+          const response = await fetch(`/api/orders/${data.orderID}/capture`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+
+          const orderData = await response.json();
+          // Three cases to handle:
+          //   (1) Recoverable INSTRUMENT_DECLINED -> call actions.restart()
+          //   (2) Other non-recoverable errors -> Show a failure message
+          //   (3) Successful transaction -> Show confirmation or thank you message
+
+          const errorDetail = orderData?.details?.[0];
+
+          if (errorDetail?.issue === "INSTRUMENT_DECLINED") {
+            // (1) Recoverable INSTRUMENT_DECLINED -> call actions.restart()
+            // recoverable state, per
+            // https://developer.paypal.com/docs/checkout/standard/customize/handle-funding-failures/
+            return actions.restart();
+          } else if (errorDetail) {
+            // (2) Other non-recoverable errors -> Show a failure message
+            throw new Error(`${errorDetail.description} (${orderData.debug_id})`);
+          } else if (!orderData.purchase_units) {
+            throw new Error(JSON.stringify(orderData));
+          } else {
+            // (3) Successful transaction -> Show confirmation or thank you message
+            // Or go to another URL:
+            window.location.href = "/users/profile";
+            /*const transaction =
+                        orderData?.purchase_units?.[0]?.payments
+                            ?.captures?.[0] ||

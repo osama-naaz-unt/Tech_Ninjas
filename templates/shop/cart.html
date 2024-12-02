@@ -63,3 +63,43 @@
         </table>
       </div>
       {% else %}
+      <div class="text-center py-12">
+        <i class="fas fa-shopping-cart text-gray-300 text-5xl mb-4"></i>
+        <p class="text-gray-500 text-lg">Your cart is empty</p>
+        <a href="{% url 'shop:shop' %}" class="mt-4 inline-block text-blue-600 hover:text-blue-700 transition duration-200"> Continue Shopping </a>
+      </div>
+      {% endif %}
+    </div>
+
+    <!-- Cart Summary -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div class="bg-white rounded-2xl shadow-lg p-6 border border-gray-100">
+        <h2 class="text-xl font-semibold mb-4 text-gray-800">Have a Coupon Code?</h2>
+
+        {% if cart.coupon %}
+        <div class="mb-4 p-4 bg-green-50 border border-green-200 rounded-lg">
+          <div class="flex justify-between items-start">
+            <div>
+              <div class="flex items-center gap-2">
+                <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <span class="font-medium text-green-800">Coupon Applied!</span>
+              </div>
+              <div class="mt-2 text-green-700">
+                <p class="text-sm">Code: <span class="font-mono font-medium">{{ cart.coupon.code }}</span></p>
+                <p class="text-sm">Discount: <span class="font-medium">{{ cart.coupon.discount_percent }}% off</span></p>
+              </div>
+            </div>
+            <form action="{% url 'shop:remove_coupon' %}" method="POST" class="ml-4">
+              {% csrf_token %}
+              <button type="submit" class="text-red-600 hover:text-red-800 text-sm font-medium flex items-center gap-1">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+                Remove
+              </button>
+            </form>
+          </div>
+        </div>
+        {% else %}

@@ -63,3 +63,22 @@
   @apply mt-1 text-sm text-red-600;
   @apply animate-fade-in;
   }
+  /* Select input specific styling */
+  select.form-input {
+  @apply pr-10 bg-white;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+  background-position: right 0.5rem center;
+  background-repeat: no-repeat;
+  background-size: 1.5em 1.5em;
+  }
+  
+  /* Textarea specific styling */
+  textarea.form-input {
+  @apply min-h-[100px] resize-y;
+  }
+  
+  /* Tab styling */
+  .tab-active {
+  @apply border-b-2 border-blue-500 text-blue-600;
+  @apply transition-all duration-200;
+  }

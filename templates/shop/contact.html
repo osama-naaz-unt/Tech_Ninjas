@@ -27,3 +27,76 @@
                             <input type="text" id="subject" name="subject" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
                         </div>
                         <div class="mb-4">
+                          <label for="message" class="block text-gray-700 font-semibold mb-2">Message</label>
+                            <textarea id="message" name="message" rows="4" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required></textarea>
+                        </div>
+                        <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-300">Send Message</button>
+                    </form>
+                </div>
+                
+                <!-- Contact Information -->
+                <div>
+                    <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+                        <h2 class="text-2xl font-semibold text-gray-800 mb-4">Contact Information</h2>
+                        <ul class="space-y-4">
+                            <li class="flex items-start">
+                                <i class="fas fa-map-marker-alt text-blue-500 mt-1 mr-3"></i>
+                                <span>123 ModernShop Street, Cityville, State 12345, Country</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-phone text-blue-500 mr-3"></i>
+                                <span>+1 (555) 123-4567</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-envelope text-blue-500 mr-3"></i>
+                                <span>support@modernshop.com</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-clock text-blue-500 mr-3"></i>
+                                <span>Monday - Friday: 9am - 5pm</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Map -->
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <h2 class="text-2xl font-semibold text-gray-800 mb-4">Find Us</h2>
+                        <div class="aspect-w-16 aspect-h-9">
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.215707164965!2d-73.98784968459375!3d40.74844097932764!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c259a9b3117469%3A0xd134e199a405a163!2sEmpire%20State%20Building!5e0!3m2!1sen!2sus!4v1619614825663!5m2!1sen!2sus" 
+                                    width="100%" 
+                                    height="300" 
+                                    style="border:0;" 
+                                    allowfullscreen="" 
+                                    loading="lazy">
+                            </iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- FAQ Section -->
+            <div class="mt-16">
+                <h2 class="text-2xl font-semibold text-gray-800 mb-8 text-center">Frequently Asked Questions</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2">What are your shipping rates?</h3>
+                        <p class="text-gray-600">Our shipping rates vary depending on the destination and the size of the order. You can view the exact shipping cost at checkout before completing your purchase.</p>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2">How long does shipping take?</h3>
+                        <p class="text-gray-600">Shipping times depend on your location and the shipping method chosen. Generally, domestic orders arrive within 3-5 business days, while international orders may take 7-14 business days.</p>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2">What is your return policy?</h3>
+                        <p class="text-gray-600">We offer a 30-day return policy for most items. Products must be in their original condition and packaging. Please check our Returns page for more details.</p>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2">Do you offer international shipping?</h3>
+                        <p class="text-gray-600">Yes, we ship to many countries worldwide. International shipping rates and delivery times vary by location. You can see available shipping options at checkout.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+{% endblock %}

@@ -133,4 +133,22 @@
   .input-group {
   @apply flex rounded-lg overflow-hidden;
   }
+  .input-group .form-input {
+  @apply rounded-none;
+  }
+  
+  .input-group > :first-child {
+  @apply rounded-l-lg;
+  }
+  
+  .input-group > :last-child {
+  @apply rounded-r-lg;
+  }
+  
+  /* Help text styling */
+  .help-text {
+  @apply mt-1 text-sm text-gray-500;
+  }
+  </style>
+{% endblock %}
   

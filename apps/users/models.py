@@ -10,7 +10,7 @@ class Account(AbstractBaseUser):
         ('female', 'Female'),
         ('other', 'Other'),
     )
-    name = models.CharField(max_length=100, null=False)
+    name = models.CharField(max_length=100, null=True)
     email = models.EmailField(verbose_name='email', max_length=60, unique=True)
     gender = models.CharField(choices=GENDER_CHOICES, default='male', max_length=10)
     is_admin = models.BooleanField(default=False)

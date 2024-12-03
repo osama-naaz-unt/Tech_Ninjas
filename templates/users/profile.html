@@ -99,3 +99,17 @@
   @apply bg-blue-600 text-white;
   @apply hover:bg-blue-700 focus:ring-blue-500;
   }
+  btn-secondary {
+  @apply bg-gray-100 text-gray-700;
+  @apply hover:bg-gray-200 focus:ring-gray-500;
+  }
+  
+  /* Animations */
+  @keyframes fade-in {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+  }
+  
+  .animate-fade-in {
+  animation: fade-in 0.2s ease-out;
+  }

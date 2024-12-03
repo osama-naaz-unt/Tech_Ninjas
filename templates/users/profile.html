@@ -237,5 +237,19 @@
             <span>Add Address</span>
           </button>
         </div>
+        <div class="grid gap-4">
+          {% if addresses %}
+            {% for address in addresses %}
+            <div class="border rounded-lg p-4 {% if address.is_default %}bg-blue-50 border-blue-200{% else %}bg-gray-50 border-gray-200{% endif %}">
+              <div class="flex justify-between items-start">
+                <div>
+                  <div class="flex items-center space-x-2 mb-2">
+                    <h3 class="font-medium text-gray-900">
+                      {% if address.is_default %}Default Address{% else %}Address {{ forloop.counter }}{% endif %}
+                    </h3>
+                    {% if address.is_default %}
+                    <span class="px-2 py-1 text-xs bg-blue-100 text-blue-800 rounded-full">Default</span>
+                    {% endif %}
+                  </div>
 
   

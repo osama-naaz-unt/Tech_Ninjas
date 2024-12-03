@@ -176,4 +176,27 @@
       </div>
     </div>
   </div>
+  <!-- Main Content -->
+  <div class="grid grid-cols-12 gap-6">
+    <!-- Left Sidebar -->
+    <div class="col-span-12 lg:col-span-4 space-y-6">
+      <!-- Personal Information Card -->
+      <div class="bg-white rounded-xl shadow-sm p-6">
+        <h2 class="text-lg font-semibold text-gray-900 mb-4">Personal Information</h2>
+        <form method="post" class="space-y-4">
+          {% csrf_token %}
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Name</label>
+            {{ personal_form.name|addclass:"form-input" }}
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Email Address</label>
+            {{ personal_form.email|addclass:"form-input" }}
+          </div>
+          <button type="submit" name="personal_info" 
+                  class="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+            Save Changes
+          </button>
+        </form>
+      </div>
   

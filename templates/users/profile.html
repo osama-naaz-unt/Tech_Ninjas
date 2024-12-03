@@ -151,4 +151,17 @@
   }
   </style>
 {% endblock %}
+% block content %}
+<div class="min-h-screen bg-gray-50 py-8">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  <!-- Profile Header -->
+  <div class="bg-white rounded-xl shadow-sm p-6 mb-6">
+    <div class="flex items-center justify-between">
+      <div class="flex items-center space-x-4">
+        <div class="relative">
+          <img src="{{ request.user.get_avatar }}" alt="Profile Picture" 
+               class="w-16 h-16 rounded-full object-cover border-2 border-gray-200"/>
+          <div class="absolute bottom-0 right-0 bg-green-500 w-4 h-4 rounded-full border-2 border-white"></div>
+        </div>
+        <div>
   

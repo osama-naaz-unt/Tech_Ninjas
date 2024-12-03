@@ -145,3 +145,4 @@ PAYPAL_CLIENT_SECRET = 'EDNZIPk0RWPSXRUnu89uT5d1RGTdOD04DocwhBMUVwutiMOGiwGQzks3
 
 # default backend
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'

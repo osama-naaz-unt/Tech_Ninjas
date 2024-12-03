@@ -2,9 +2,10 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from django.contrib import messages
 from django.utils import timezone
-from apps.shop.models import Product, Category, Cart, CartItem
+from apps.shop.models import Product, Category, Cart, CartItem, Coupon
 from django.core.paginator import Paginator
-from django.db.models import Q, Avg
+from django.db.models import Q, Avg, Count
+from apps.users.models import Subscription
 from apps.shop.forms import ReviewForm
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
@@ -29,8 +30,9 @@ from paypalserversdk.models.checkout_payment_intent import CheckoutPaymentIntent
 from paypalserversdk.models.order_request import OrderRequest
 from paypalserversdk.models.purchase_unit_request import PurchaseUnitRequest
 from paypalserversdk.api_helper import ApiHelper
-from django.db.models import Q, Count
 from datetime import timedelta
+from django.conf import settings
+from django.core.mail import send_mail
 
 # Initialize PayPal client
 paypal_client = PaypalServersdkClient(
@@ -40,7 +42,7 @@ paypal_client = PaypalServersdkClient(
     ),
     logging_configuration=LoggingConfiguration(
         log_level=logging.INFO,
-        mask_sensitive_headers=False,  # Set to True in production
+        mask_sensitive_headers=False, 
         request_logging_config=RequestLoggingConfiguration(
             log_headers=True, 
             log_body=True
@@ -143,35 +145,22 @@ def get_recommended_products(request, total_products=4):
     return recommended[:total_products]
 
 
-products = [
-    {'name': 'Smartphone X', 'price': 699.99, 'image': 'https://via.placeholder.com/300x300?text=Smartphone+X'},
-    {'name': 'Laptop Pro', 'price': 1299.99, 'image': 'https://via.placeholder.com/300x300?text=Laptop+Pro'},
-    {'name': 'Wireless Earbuds', 'price': 129.99, 'image': 'https://via.placeholder.com/300x300?text=Wireless+Earbuds'},
-    {'name': 'Smart Watch', 'price': 249.99, 'image': 'https://via.placeholder.com/300x300?text=Smart+Watch'},
-    {'name': '4K TV', 'price': 799.99, 'image': 'https://via.placeholder.com/300x300?text=4K+TV'},
-    {'name': 'Gaming Console', 'price': 499.99, 'image': 'https://via.placeholder.com/300x300?text=Gaming+Console'},
-    {'name': 'Digital Camera', 'price': 599.99, 'image': 'https://via.placeholder.com/300x300?text=Digital+Camera'},
-    {'name': 'Bluetooth Speaker', 'price': 79.99, 'image': 'https://via.placeholder.com/300x300?text=Bluetooth+Speaker'},
-]
-
-categories = [
-    {'name': 'Electronics', 'icon': 'fas fa-mobile-alt'},
-    {'name': 'Clothing', 'icon': 'fas fa-tshirt'},
-    {'name': 'Home & Garden', 'icon': 'fas fa-home'},
-    {'name': 'Sports & Outdoors', 'icon': 'fas fa-football-ball'},
-    {'name': 'Beauty & Personal Care', 'icon': 'fas fa-spa'},
-    {'name': 'Books & Media', 'icon': 'fas fa-book'},
-    {'name': 'Toys & Games', 'icon': 'fas fa-gamepad'},
-    {'name': 'Automotive', 'icon': 'fas fa-car'},
-]
-
 def index(request):
 
-    # Handle newsletter signup
     if request.method == 'POST':
         email = request.POST.get('email')
-        if email:
+        subscription, created = Subscription.objects.get_or_create(email=email)
+        if created:
             messages.success(request, f"Thank you for subscribing with {email}!")
+            send_mail(
+                'New Subscription - ModernShop',
+                'Thank you for subscribing to ModernShop!',
+                settings.EMAIL_HOST_USER,
+                [email,],
+                fail_silently=False,
+            )
+        else:
+            messages.warning(request, f"You are already subscribed with {email}.")
 
     context = {
         'page': 'Home',
@@ -291,34 +280,75 @@ def product(request, product_id):
     return render(request, 'shop/product.html', context)
 
 def checkout(request):
-    # Sample order summary
-    order_items = [
-        {'name': 'Smartphone X', 'price': 699.99, 'quantity': 1},
-        {'name': 'Wireless Earbuds', 'price': 129.99, 'quantity': 2},
-    ]
-    subtotal = sum(item['price'] * item['quantity'] for item in order_items)
-    tax = subtotal * 0.1  # Assuming 10% tax
-    shipping = 10.00
-    total = subtotal + tax + shipping
-    context = {
-        'page': 'Checkout',
-        'order_items': order_items,
-        'subtotal': subtotal,
-        'tax': tax,
-        'shipping': shipping,
-        'total': total,
-    }
-    return render(request, 'shop/checkout.html', context)
+    if request.method == 'POST':
+        db_order = get_cart(request)
+        db_order.status = "pending dispatch"
+        db_order.save()
+        if db_order.coupon:
+            db_order.coupon.is_active = False
+            db_order.coupon.save()
+        # Build the order items text
+        order_items_text = []
+        for item in db_order.cartitem_set.all():
+            order_items_text.append(
+                f"- {item.product.name} x {item.quantity} @ ${item.product.price:.2f} each = ${item.total_price:.2f}"
+            )
+
+        # Calculate discount if coupon is applied
+        discount_text = ""
+        if db_order.coupon:
+            discount_amount = db_order.total * (db_order.coupon.discount_percent / 100)
+            discount_text = f"Discount ({db_order.coupon.code}): -${discount_amount:.2f}\n"
+
+        # Create the complete email message
+        email_message = f'''
+        New order received: #{db_order.id}
+
+        Order Items:
+        {"\n".join(order_items_text)}
+
+        Subtotal: ${sum(item.total_price for item in db_order.cartitem_set.all()):.2f}
+        {discount_text}Total: ${db_order.total:.2f}
+
+        Order Status: {db_order.get_status_display()}
+
+        Thank you for shopping with ModernShop!
+        '''
+
+        send_mail(
+            'New Order - ModernShop',
+            email_message,
+            settings.EMAIL_HOST_USER,
+            [request.user.email,],
+            fail_silently=False,
+        )
+
+        messages.success(request, f'Your order has been submitted. We will process it as soon as possible. An email has been sent to your email address: {request.user.email}',)
+        return redirect('users:profile')
 
 def contact(request):
-    context = {
-        'page': 'Contact Us',
-        'company_name': 'ModernShop',
-        'address': '123 Shop Street, City, Country',
-        'phone': '+1 (555) 123-4567',
-        'email': 'info@modernshop.com',
-    }
-    return render(request, 'shop/contact.html', context)
+    if request.method == 'POST':
+        name = request.POST['name']
+        email = request.POST['email']
+        subject = request.POST['subject']
+        message = request.POST['message']
+        send_mail(
+            subject,
+            f'Name: {name}\nEmail: {email}\nSubject: {subject}\nMessage:\n{message}',
+            settings.EMAIL_HOST_USER,
+            ['your_email@example.com',],
+            fail_silently=False,
+        )
+        # send confirmation email
+        send_mail(
+            'Confirmation - ModernShop',
+            f'Thank you for your message. We will get back to you soon.',
+            settings.EMAIL_HOST_USER,
+            [email,],
+            fail_silently=False,
+        )
+        messages.success(request, 'Your message has been sent. We will get back to you soon.')
+    return render(request, 'shop/contact.html')
 
 @login_required
 def add_to_cart(request, product_id):
@@ -361,13 +391,36 @@ def add_to_cart(request, product_id):
 def cart(request):
     cart = get_cart(request)
     cart_items = cart.cartitem_set.all()
-    
     context = {
         'cart': cart,
         'cart_items': cart_items,
         'recommended_products': get_recommended_products(request, 4),
     }
     return render(request, 'shop/cart.html', context)
+
+def apply_coupon(request):
+    code = request.POST.get('coupon')
+    try:
+        coupon = Coupon.objects.get(code=code, is_active=True)
+        cart = get_cart(request)
+        cart.coupon = coupon
+        cart.save()
+        messages.success(request, 'Coupon applied successfully!')
+    except Coupon.DoesNotExist:
+        messages.error(request, 'Invalid or expired coupon code.')
+    except Cart.DoesNotExist:
+        messages.error(request, 'No active cart found.')
+    return redirect('shop:cart')
+
+def remove_coupon(request):
+    try:
+        cart = get_cart(request)
+        cart.coupon = None
+        cart.save()
+        messages.success(request, 'Coupon removed successfully.')
+    except Cart.DoesNotExist:
+        messages.error(request, 'No active cart found.')
+    return redirect('shop:cart')
 
 @login_required
 def update_cart(request, item_id):
@@ -383,7 +436,9 @@ def update_cart(request, item_id):
             cart_item.save()
         else:
             cart_item.delete()
-
+            
+        messages.success(request, "Cart updated successfully.")
+        
         if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
             cart = cart_item.cart
             cart_data = {
@@ -544,3 +599,25 @@ def order(request, cart_id):
     }
     
     return render(request, 'shop/order.html', context)
+
+def pay_on_delivery(request):
+    if request.method == 'POST':
+        db_order = get_cart(request)
+        db_order.status = "pending dispatch"
+        db_order.save()
+        return redirect('users:profile')
+    
+def mark_delivered(request):
+    # Get the cart object or return 404
+    cart = get_cart(request)
+    cart.status = "delivered"
+    cart.save()
+    send_mail(
+        'Order Delivered',
+        f'Your order {cart.id} has been delivered.',
+        settings.EMAIL_HOST_USER,
+        [request.user.email],
+        fail_silently=False,
+    )
+    messages.success(request, 'Order marked as delivered. A confirmation email has been sent.')
+    return redirect('users:profile')

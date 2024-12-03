@@ -80,3 +80,35 @@
         <div class="mb-4 p-4 bg-green-50 border border-green-200 rounded-lg">
           <div class="flex justify-between items-start">
             <div>
+              <div class="flex items-center gap-2">
+                <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <span class="font-medium text-green-800">Coupon Applied!</span>
+              </div>
+              <div class="mt-2 text-green-700">
+                <p class="text-sm">Code: <span class="font-mono font-medium">{{ cart.coupon.code }}</span></p>
+                <p class="text-sm">Discount: <span class="font-medium">{{ cart.coupon.discount_percent }}% off</span></p>
+              </div>
+            </div>
+            <form action="{% url 'shop:remove_coupon' %}" method="POST" class="ml-4">
+              {% csrf_token %}
+              <button type="submit" class="text-red-600 hover:text-red-800 text-sm font-medium flex items-center gap-1">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+                Remove
+              </button>
+            </form>
+          </div>
+        </div>
+        {% else %}
+        <form action="{% url 'shop:apply_coupon' %}" method="POST" class="flex space-x-2">
+          {% csrf_token %}
+          <input type="text" placeholder="Enter your code" class="flex-1 border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" name="coupon" required />
+          <button type="submit" class="bg-gray-800 text-white px-6 py-2 rounded-lg hover:bg-gray-700 transition duration-200">Apply</button>
+        </form>
+        {% if messages %} {% for message in messages %}
+        <div class="mt-2 text-sm {% if message.tags == 'error' %}text-red-600{% elif message.tags == 'success' %}text-green-600{% endif %}">{{ message }}</div>
+        {% endfor %} {% endif %} {% endif %}
+      </div>

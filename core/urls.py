@@ -23,5 +23,5 @@ urlpatterns += [
 ]
 
 # admin.site.enable_nav_sidebar = False 
-admin.site.site_header = "ModernShop Dashbard"
+admin.site.site_header = "ModernShop Dashboard"
 admin.site.site_title = "ModernShop Portal"

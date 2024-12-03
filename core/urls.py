@@ -13,7 +13,7 @@ urlpatterns = [
 # Serve static and media files
 urlpatterns += [
     re_path(r'^media/(?P<path>.*)$', serve, {
-        'document_root': settings.MEDIA_ROOT,
+        'document_root': settings.MEDIA_ROO,
     }),
 ]
 urlpatterns += [

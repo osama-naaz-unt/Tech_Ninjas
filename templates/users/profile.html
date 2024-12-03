@@ -123,4 +123,14 @@
   .form-input:disabled {
   @apply bg-gray-50 cursor-not-allowed;
   }
+  /* Required field indicator */
+  .required::after {
+  content: "*";
+  @apply text-red-500 ml-1;
+  }
+  
+  /* Input group styling */
+  .input-group {
+  @apply flex rounded-lg overflow-hidden;
+  }
   

@@ -209,4 +209,18 @@
             {{ password_form.old_password|addclass:"form-input" }}
           </div>
           <div>
+            <label class="block text-sm font-medium text-gray-700">New Password</label>
+            {{ password_form.new_password1|addclass:"form-input" }}
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Confirm New Password</label>
+            {{ password_form.new_password2|addclass:"form-input" }}
+          </div>
+          <button type="submit" name="change_password" 
+                  class="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+            Update Password
+          </button>
+        </form>
+      </div>
+    </div>
   

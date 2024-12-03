@@ -257,5 +257,16 @@
                     <p>{{ address.country }}</p>
                   </div>
                 </div>
+                <div class="flex space-x-2">
+                  {% if not address.is_default %}
+                  <form method="POST" action="{% url 'users:set_default_address' address.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="p-2 text-gray-400 hover:text-blue-600 transition" title="Set as default">
+                      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                              d="M5 13l4 4L19 7"/>
+                      </svg>
+                    </button>
+                  </form>
 
   

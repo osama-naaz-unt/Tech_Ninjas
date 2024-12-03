@@ -10,6 +10,7 @@ urlpatterns = [
     path('product/<int:product_id>/', views.product, name='product'),
     path('categories/', views.categories, name='categories'),
     path('cart/', views.cart, name='cart'),
+    path('cart/delivered/', views.mark_delivered, name='mark_delivered'),
     path('checkout/', views.checkout, name='checkout'),
     path('contact/', views.contact, name='contact'),   
     path('cart/add/<int:product_id>/', views.add_to_cart, name='add_to_cart'),
@@ -20,4 +21,6 @@ urlpatterns = [
     path('api/orders', views.create_order, name='create_order'),
     path('api/orders/<str:order_id>/capture', views.capture_order, name='capture_order'),
     path('orders/<str:cart_id>/', views.order, name='order'),
+    path('apply-coupon/', views.apply_coupon, name='apply_coupon'),
+    path('remove-coupon/', views.remove_coupon, name='remove_coupon'),
 ]

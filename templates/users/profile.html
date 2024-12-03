@@ -113,3 +113,14 @@
   .animate-fade-in {
   animation: fade-in 0.2s ease-out;
   }
+  /* Form field focus states */
+  .form-input:focus {
+  @apply outline-none;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  }
+  
+  /* Disabled state styling */
+  .form-input:disabled {
+  @apply bg-gray-50 cursor-not-allowed;
+  }
+  

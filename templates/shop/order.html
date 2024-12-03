@@ -1,123 +1,132 @@
-{% extends 'base.html' %}
-{% load static %}
+{% extends 'base.html' %} {% load static %} {% block content %}
+<!-- Order Details Section -->
+<section class="py-16 bg-gradient-to-b from-gray-50 to-white">
+  <div class="container mx-auto px-4 sm:px-6 max-w-7xl">
+    <h1 class="text-4xl font-bold text-gray-800 mb-8 text-center sm:text-left">
+      Order Details
+      <span class="text-gray-500 text-lg ml-2">({{ cart.total_items }} items)</span>
+    </h1>
 
-{% block content %}
-    <!-- Order Details Section -->
-    <section class="py-16 bg-gradient-to-b from-gray-50 to-white">
-        <div class="container mx-auto px-4 sm:px-6 max-w-7xl">
-            <h1 class="text-4xl font-bold text-gray-800 mb-8 text-center sm:text-left">
-                Order Details
-                <span class="text-gray-500 text-lg ml-2">({{ cart.total_items }} items)</span>
-            </h1>
-            
-            <!-- Order Items -->
-            <div class="bg-white rounded-2xl shadow-lg p-4 sm:p-6 mb-8 border border-gray-100">
-                {% if cart_items %}
-                <div class="overflow-x-auto">
-                    <table class="w-full">
-                        <thead>
-                            <tr class="border-b-2 border-gray-100">
-                                <th class="text-left py-4 px-4 text-gray-600">Product</th>
-                                <th class="text-left py-4 px-4 text-gray-600">Price</th>
-                                <th class="text-left py-4 px-4 text-gray-600">Quantity</th>
-                                <th class="text-left py-4 px-4 text-gray-600">Total</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for item in cart_items %}
-                            <tr class="border-b border-gray-100">
-                                <td class="py-6 px-4">
-                                    <div class="flex items-center">
-                                        <div class="w-24 h-24 flex-shrink-0 overflow-hidden rounded-lg border border-gray-200">
-                                            <img src="{{ item.product.image.url }}" 
-                                                 alt="{{ item.product.name }}" 
-                                                 class="w-full h-full object-cover">
-                                        </div>
-                                        <div class="ml-4">
-                                            <h3 class="font-semibold text-gray-800">
-                                                {{ item.product.name }}
-                                            </h3>
-                                            <p class="text-sm text-gray-500 mt-1">SKU: {{ item.product.id }}</p>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="py-6 px-4">
-                                    <span class="text-gray-800 font-medium">${{ item.product.price }}</span>
-                                </td>
-                                <td class="py-6 px-4">
-                                    <span class="text-gray-800">{{ item.quantity }}</span>
-                                </td>
-                                <td class="py-6 px-4">
-                                    <span class="font-semibold text-gray-800">${{ item.total_price }}</span>
-                                </td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
+    <!-- Order Items -->
+    <div class="bg-white rounded-2xl shadow-lg p-4 sm:p-6 mb-8 border border-gray-100">
+      {% if cart_items %}
+      <div class="overflow-x-auto">
+        <table class="w-full">
+          <thead>
+            <tr class="border-b-2 border-gray-100">
+              <th class="text-left py-4 px-4 text-gray-600">Product</th>
+              <th class="text-left py-4 px-4 text-gray-600">Price</th>
+              <th class="text-left py-4 px-4 text-gray-600">Quantity</th>
+              <th class="text-left py-4 px-4 text-gray-600">Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for item in cart_items %}
+            <tr class="border-b border-gray-100">
+              <td class="py-6 px-4">
+                <div class="flex items-center">
+                  <div class="w-24 h-24 flex-shrink-0 overflow-hidden rounded-lg border border-gray-200">
+                    <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="w-full h-full object-cover" />
+                  </div>
+                  <div class="ml-4">
+                    <h3 class="font-semibold text-gray-800">{{ item.product.name }}</h3>
+                    <p class="text-sm text-gray-500 mt-1">SKU: {{ item.product.id }}</p>
+                  </div>
                 </div>
-                {% else %}
-                <div class="text-center py-12">
-                    <i class="fas fa-shopping-cart text-gray-300 text-5xl mb-4"></i>
-                    <p class="text-gray-500 text-lg">No items in this order</p>
-                </div>
-                {% endif %}
-            </div>
-            
-            <!-- Order Summary -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="bg-white rounded-2xl shadow-lg p-6 border border-gray-100">
-                    <h2 class="text-xl font-semibold mb-4 text-gray-800">Order Information</h2>
-                    <div class="space-y-2">
-                        <p><span class="font-medium">Order ID:</span> #{{ cart.id }}</p>
-                        <p><span class="font-medium">Date:</span> {{ cart.created_at|date:"F d, Y H:i" }}</p>
-                        <p><span class="font-medium">Status:</span> {{ cart.status|title }}</p>
-                    </div>
-                </div>
+              </td>
+              <td class="py-6 px-4">
+                <span class="text-gray-800 font-medium">${{ item.product.price }}</span>
+              </td>
+              <td class="py-6 px-4">
+                <span class="text-gray-800">{{ item.quantity }}</span>
+              </td>
+              <td class="py-6 px-4">
+                <span class="font-semibold text-gray-800">${{ item.total_price }}</span>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+      <div class="text-center py-12">
+        <i class="fas fa-shopping-cart text-gray-300 text-5xl mb-4"></i>
+        <p class="text-gray-500 text-lg">No items in this order</p>
+      </div>
+      {% endif %}
+    </div>
 
-                <div class="bg-white rounded-2xl shadow-lg p-6 border border-gray-100">
-                    <h2 class="text-xl font-semibold mb-4 text-gray-800">Order Summary</h2>
-                    <div class="border-t border-gray-100 pt-4 mt-4">
-                        <div class="flex justify-between items-center mb-2">
-                            <span class="text-gray-600">Subtotal</span>
-                            <span class="font-medium">${{ cart.total|floatformat:2 }}</span>
-                        </div>
-                        {% if cart.tax %}
-                        <div class="flex justify-between items-center mb-2">
-                            <span class="text-gray-600">Tax</span>
-                            <span class="font-medium">${{ cart.tax|floatformat:2 }}</span>
-                        </div>
-                        {% endif %}
-                        {% if cart.shipping_cost %}
-                        <div class="flex justify-between items-center mb-2">
-                            <span class="text-gray-600">Shipping</span>
-                            <span class="font-medium">${{ cart.shipping_cost|floatformat:2 }}</span>
-                        </div>
-                        {% endif %}
-                        <div class="flex justify-between items-center pt-4 border-t border-gray-100">
-                            <span class="font-semibold text-lg">Total</span>
-                            <span class="font-bold text-2xl text-blue-600">${{ cart.total|floatformat:2 }}</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Shipping Information -->
-            {% if cart.shipping_address %}
-            <div class="mt-8 bg-white rounded-2xl shadow-lg p-6 border border-gray-100">
-                <h2 class="text-xl font-semibold mb-4 text-gray-800">Shipping Information</h2>
-                <address class="not-italic">
-                    {{ cart.shipping_address|linebreaks }}
-                </address>
-            </div>
-            {% endif %}
-
-            <!-- Back to Orders Button -->
-            <div class="mt-8">
-                <a href="{% url 'users:profile' %}" 
-                   class="inline-block px-6 py-3 text-sm font-medium leading-6 text-center text-white uppercase transition bg-blue-600 rounded-full shadow ripple hover:shadow-lg hover:bg-blue-800 focus:outline-none">
-                    Back to Orders
-                </a>
-            </div>
+    <!-- Order Summary -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div class="bg-white rounded-2xl shadow-lg p-6 border border-gray-100">
+        <h2 class="text-xl font-semibold mb-4 text-gray-800">Order Information</h2>
+        <div class="space-y-2">
+          <p><span class="font-medium">Order ID:</span> #{{ cart.id }}</p>
+          <p><span class="font-medium">Date:</span> {{ cart.created_at|date:"F d, Y H:i" }}</p>
+          <p><span class="font-medium">Status:</span> {{ cart.status|title }}</p>
         </div>
-    </section>
+      </div>
+
+      <div class="bg-white rounded-2xl shadow-lg p-6 border border-gray-100">
+        <h2 class="text-xl font-semibold mb-4 text-gray-800">Order Summary</h2>
+        <div class="border-t border-gray-100 pt-4 mt-4">
+          <div class="flex justify-between items-center mb-2">
+            <span class="text-gray-600">Subtotal</span>
+            <span class="font-medium">${{ cart.total|floatformat:2 }}</span>
+          </div>
+          {% if cart.tax %}
+          <div class="flex justify-between items-center mb-2">
+            <span class="text-gray-600">Tax</span>
+            <span class="font-medium">${{ cart.tax|floatformat:2 }}</span>
+          </div>
+          {% endif %} {% if cart.shipping_cost %}
+          <div class="flex justify-between items-center mb-2">
+            <span class="text-gray-600">Shipping</span>
+            <span class="font-medium">${{ cart.shipping_cost|floatformat:2 }}</span>
+          </div>
+          {% endif %}
+          <div class="flex justify-between items-center pt-4 border-t border-gray-100">
+            <span class="font-semibold text-lg">Total</span>
+            <span class="font-bold text-2xl text-blue-600">${{ cart.total|floatformat:2 }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Shipping Information -->
+    {% if cart.shipping_address %}
+    <div class="mt-8 bg-white rounded-2xl shadow-lg p-6 border border-gray-100">
+      <h2 class="text-xl font-semibold mb-4 text-gray-800">Shipping Information</h2>
+      <address class="not-italic">{{ cart.shipping_address|linebreaks }}</address>
+    </div>
+    {% endif %}
+
+    <!-- Action Buttons -->
+    <div class="mt-8 flex justify-between items-center">
+      <a href="{% url 'users:profile' %}" class="inline-block px-6 py-3 text-sm font-medium leading-6 text-center text-white uppercase transition bg-blue-600 rounded-full shadow ripple hover:shadow-lg hover:bg-blue-800 focus:outline-none"> Back to Orders </a>
+
+    {% if cart.status == 'in transit' %}
+      <form action="{% url 'shop:mark_delivered' %}" method="POST" class="inline">
+        {% csrf_token %}
+        <button type="submit" class="px-6 py-3 text-sm font-medium leading-6 text-center text-white uppercase transition bg-green-600 rounded-full shadow ripple hover:shadow-lg hover:bg-green-700 focus:outline-none flex items-center space-x-2">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+          </svg>
+          <span>Mark Delivered</span>
+        </button>
+      </form>
+    {% elif cart.status == 'active' %}
+    <form action="{% url 'shop:checkout' %}" method="POST" class="inline">
+      {% csrf_token %}
+      <button type="submit" class="px-6 py-3 text-sm font-medium leading-6 text-center text-white uppercase transition bg-green-600 rounded-full shadow ripple hover:shadow-lg hover:bg-green-700 focus:outline-none flex items-center space-x-2">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+        </svg>
+        <span>Pay on Delivery</span>
+      </button>
+    </form>
+    {% endif %}
+    </div>
+  </div>
+</section>
 {% endblock %}

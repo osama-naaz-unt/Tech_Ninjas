@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% load static %}
+{% load static shop_tags %}
 
 {% block content %}
 
@@ -66,36 +66,44 @@
             <!-- Product Grid -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
                 {% for product in page_obj %}
-                <div class="bg-white rounded-lg shadow-md overflow-hidden flex flex-col">
-                    <a href="{{ product.get_absolute_url }}" class="block flex-grow">
-                        <img src="{{ product.image.url }}" alt="{{ product.name }}" class="w-full h-64 object-cover">
-                        <div class="p-4">
-                            <h3 class="text-xl font-semibold mb-2">{{ product.name }}</h3>
-                            <p class="text-gray-600 mb-2">${{ product.price }}</p>
-                            <div class="flex items-center mb-2">
-                                <span class="text-yellow-400">
-                                    {% with ''|center:5 as range %}
-                                    {% for _ in range %}
-                                        {% if forloop.counter <= product.avg_rating %}
-                                            ★
-                                        {% else %}
-                                            ☆
-                                        {% endif %}
-                                    {% endfor %}
-                                    {% endwith %}
-                                </span>
-                                <span class="ml-1 text-gray-600">({{ product.avg_rating|default:0|floatformat:1 }})</span>
-                            </div>
-                        </div>
-                    </a>
-                    <div class="px-4 pb-4 mt-auto">
-                        <div class="flex space-x-2">
-                            <a href="{{ product.get_absolute_url }}" class="bg-blue-600 text-white py-2 px-4 rounded-full hover:bg-blue-700 transition duration-300 text-center flex-grow">View Product</a>
-                            <a href="{{ product.add_to_cart_url }}" class="bg-green-600 text-white py-2 px-4 rounded-full hover:bg-green-700 transition duration-300 text-center flex-grow">Add to Cart</a>
-                        </div>
-                    </div>
-                </div>
-                {% endfor %}
+<div class="bg-white rounded-lg shadow-md overflow-hidden flex flex-col">
+  <a href="{{ product.get_absolute_url }}" class="block flex-grow">
+    <img src="{{ product.image.url }}" alt="{{ product.name }}" class="w-full h-64 object-cover">
+    <div class="p-4">
+      <h3 class="text-xl font-semibold mb-2">{{ product.name }}</h3>
+      <div class="flex flex-wrap items-center gap-2 mb-2">
+        <p class="text-lg font-medium text-gray-900">${{ product.price }}</p>
+        {% if product.old_price %}
+          <p class="text-sm text-gray-500 line-through">${{ product.old_price }}</p>
+          <span class="text-xs font-medium text-red-600 bg-red-100 px-2 py-0.5 rounded-full">
+            {% widthratio product.old_price|sub:product.price product.old_price 100 %}% OFF
+          </span>
+        {% endif %}
+      </div>
+      <div class="flex items-center mb-2">
+        <span class="text-yellow-400">
+          {% with ''|center:5 as range %}
+          {% for _ in range %}
+            {% if forloop.counter <= product.avg_rating %}
+              ★
+            {% else %}
+              ☆
+            {% endif %}
+          {% endfor %}
+          {% endwith %}
+        </span>
+        <span class="ml-1 text-gray-600">({{ product.avg_rating|default:0|floatformat:1 }})</span>
+      </div>
+    </div>
+  </a>
+  <div class="px-4 pb-4 mt-auto">
+    <div class="flex space-x-2">
+      <a href="{{ product.get_absolute_url }}" class="bg-blue-600 text-white py-2 px-4 rounded-full hover:bg-blue-700 transition duration-300 text-center flex-grow">View Product</a>
+      <a href="{{ product.add_to_cart_url }}" class="bg-green-600 text-white py-2 px-4 rounded-full hover:bg-green-700 transition duration-300 text-center flex-grow">Add to Cart</a>
+    </div>
+  </div>
+</div>
+{% endfor %}
             </div>
 
             <!-- Pagination -->

@@ -59,3 +59,24 @@
               </td>
             </tr>
             {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+      <div class="text-center py-12">
+        <i class="fas fa-shopping-cart text-gray-300 text-5xl mb-4"></i>
+        <p class="text-gray-500 text-lg">Your cart is empty</p>
+        <a href="{% url 'shop:shop' %}" class="mt-4 inline-block text-blue-600 hover:text-blue-700 transition duration-200"> Continue Shopping </a>
+      </div>
+      {% endif %}
+    </div>
+
+    <!-- Cart Summary -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div class="bg-white rounded-2xl shadow-lg p-6 border border-gray-100">
+        <h2 class="text-xl font-semibold mb-4 text-gray-800">Have a Coupon Code?</h2>
+
+        {% if cart.coupon %}
+        <div class="mb-4 p-4 bg-green-50 border border-green-200 rounded-lg">
+          <div class="flex justify-between items-start">
+            <div>

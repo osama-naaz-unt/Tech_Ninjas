@@ -199,4 +199,14 @@
           </button>
         </form>
       </div>
+      <!-- Password Change Card -->
+      <div class="bg-white rounded-xl shadow-sm p-6">
+        <h2 class="text-lg font-semibold text-gray-900 mb-4">Change Password</h2>
+        <form method="post" class="space-y-4">
+          {% csrf_token %}
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Current Password</label>
+            {{ password_form.old_password|addclass:"form-input" }}
+          </div>
+          <div>
   

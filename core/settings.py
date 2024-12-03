@@ -29,6 +29,8 @@ ALLOWED_HOSTS = []
 
 LOGOUT_REDIRECT_URL  = '/'
 
+LOGIN_URL = '/users/login/'
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -118,7 +120,7 @@ TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
@@ -140,3 +142,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 PAYPAL_CLIENT_ID = 'AeRRud6E1YCsRUXFGKENChRJrjO9cFdrdSmcuj-m8zer9glCyFiU5jSJQoMQPPI6e4JxDyulTG47OvsJ'
 PAYPAL_CLIENT_SECRET = 'EDNZIPk0RWPSXRUnu89uT5d1RGTdOD04DocwhBMUVwutiMOGiwGQzks3lgYICU_n-embN9fRHjvKiXdD'
+
+# default backend
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
